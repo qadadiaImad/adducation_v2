@@ -3,12 +3,28 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+  }
+
+  .dark {
+    --background: 217 33% 17%;
+    --foreground: 210 40% 98%;
+  }
+  
   html {
     scroll-behavior: smooth;
   }
   
   body {
-    @apply bg-gray-50 text-gray-900;
+    @apply bg-gray-50 text-gray-900 transition-colors duration-300;
+    min-height: 100vh;
+  }
+
+  .dark body {
+    @apply bg-dark-200 text-gray-100;
+    background-image: linear-gradient(to bottom right, rgba(42, 52, 65, 0.8), rgba(26, 34, 48, 1));
   }
 }
 
@@ -22,15 +38,29 @@
   }
   
   .card {
-    @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6;
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6 transition-colors duration-200;
+  }
+
+  .dark .card {
+    @apply bg-dark-100 border-gray-700/50 shadow-lg;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
   
   .input-field {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors duration-200;
+  }
+
+  .dark .input-field {
+    @apply border-gray-600 bg-dark-100/90 text-white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) inset;
   }
   
   .progress-bar {
-    @apply w-full bg-gray-200 rounded-full h-2;
+    @apply w-full bg-gray-200 rounded-full h-2 transition-colors duration-200;
+  }
+
+  .dark .progress-bar {
+    @apply bg-gray-700;
   }
   
   .progress-fill {
@@ -45,5 +75,10 @@
   
   .glass-effect {
     @apply bg-white/80 backdrop-blur-sm border border-white/20;
+  }
+
+  .dark .glass-effect {
+    @apply bg-dark-100/70 border-gray-700/30;
+    backdrop-filter: blur(10px);
   }
 }
