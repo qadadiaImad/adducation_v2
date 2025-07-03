@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable static export
-  output: 'export',
+  // Ensure we're not using static export mode
+  output: undefined,
   trailingSlash: true,
   
-  // Disable features that don't work with static export
+  // Keep image optimization disabled if needed
   images: {
     unoptimized: true,
   },

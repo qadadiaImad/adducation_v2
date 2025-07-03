@@ -81,7 +81,8 @@ export default function InterviewPage() {
       const result = await llmService.evaluateInterviewResponse({
         question: currentQuestion,
         response: userResponse,
-        jobRole
+        jobRole,
+        modelId: llmService.getSelectedModel()
       })
 
       if (result.success) {

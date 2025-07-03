@@ -6,9 +6,10 @@ class AuthService {
   private isBackendAvailable: boolean = true
 
   constructor() {
-    // Use the actual backend URL directly now that CORS is configured
+    // Store the actual backend URL for reference
     this.actualBackendUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://m4o0sko4wscoc4g8kw880sok.37.27.220.218.sslip.io'
-    this.baseUrl = this.actualBackendUrl
+    // Use the Next.js API proxy route instead of direct backend URL
+    this.baseUrl = '/api/proxy'
     
     // Skip connection check on server side
     if (typeof window !== 'undefined') {
@@ -22,17 +23,19 @@ class AuthService {
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), 5000)
       
-      // Since we're only running this on the client side now, we can use relative URLs
-      console.log('Fetching from proxy URL:', this.baseUrl)
+      // Use a specific status endpoint instead of root to get a quicker response
+      const statusUrl = `${this.baseUrl}/status`
+      console.log('Fetching from proxy status URL:', statusUrl)
       
-      const response = await fetch(this.baseUrl, {
+      const response = await fetch(statusUrl, {
         method: 'GET',
         signal: controller.signal
       })
       
       clearTimeout(timeoutId)
-      this.isBackendAvailable = response.ok
-      console.log('Backend available:', this.isBackendAvailable)
+      // Accept both successful responses and 404s as signs the backend is reachable
+      this.isBackendAvailable = response.ok || response.status === 404
+      console.log('Backend available:', this.isBackendAvailable, 'Status:', response.status)
     } catch (error) {
       console.error('Backend connection check failed:', error)
       this.isBackendAvailable = false
