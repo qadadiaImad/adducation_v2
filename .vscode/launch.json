@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Flutter Web Debug",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "args": [
+        "-d",
+        "chrome",
+        "--web-port=9090",
+        "--host-vmservice-port=9091"
+      ]
+    },
+    {
+      "name": "Attach to Chrome",
+      "request": "attach",
+      "type": "dart",
+      "deviceId": "chrome",
+      "vmServiceUri": "http://localhost:9091"
+    }
+  ]
+}
